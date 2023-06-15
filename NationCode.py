@@ -6,7 +6,9 @@ import openpyxl as px
 folder_path = 'occurrenceDataSampleFolder'
 
 
-k=2
+k=3
+
+
 
 cclist = [
     'AD', 'AE', 'AF', 'AG', 'AI', 'AL', 'AM', 'AO', 'AQ', 'AR', 'AS', 'AT',
@@ -39,6 +41,36 @@ ws2.cell(row=1, column=1).value = 'CountryCode'
 for i, cc in enumerate(cclist, start=2):
     ws2.cell(row=i, column=1).value = cc
 
+cclist3letter = [
+    "AND", "ARE", "AFG", "ATG", "AIA", "ALB", "ARM", "AGO", "ATA", "ARG", "ASM",
+    "AUT", "AUS", "ABW", "ALA", "AZE", "BIH", "BRB", "BGD", "BEL", "BFA", "BGR",
+    "BHR", "BDI", "BEN", "BLM", "BMU", "BRN", "BOL", "BES", "BRA", "BHS", "BTN",
+    "BVT", "BWA", "BLR", "BLZ", "CAN", "CCK", "COD", "CAF", "COG", "CHE", "CIV",
+    "COK", "CHL", "CMR", "CHN", "COL", "CRI", "CUB", "CPV", "CUW", "CXR", "CYP",
+    "CZE", "DEU", "DJI", "DNK", "DMA", "DOM", "DZA", "ECU", "EST", "EGY", "ESH",
+    "ERI", "ESP", "ETH", "FIN", "FJI", "FLK", "FSM", "FRO", "FRA", "GAB", "GBR",
+    "GRD", "GEO", "GUF", "GGY", "GHA", "GIB", "GRL", "GMB", "GIN", "GLP", "GNQ",
+    "GRC", "SGS", "GTM", "GUM", "GNB", "GUY", "HKG", "HMD", "HND", "HRV", "HTI",
+    "HUN", "IDN", "IRL", "ISR", "IMN", "IND", "IOT", "IRQ", "IRN", "ISL", "ITA",
+    "JEY", "JAM", "JOR", "JPN", "KEN", "KGZ", "KHM", "KIR", "COM", "KNA", "PRK",
+    "KOR", "KWT", "CYM", "KAZ", "LAO", "LBN", "LCA", "LIE", "LKA", "LBR", "LSO",
+    "LTU", "LUX", "LVA", "LBY", "MAR", "MCO", "MDA", "MNE", "MAF", "MDG", "MHL",
+    "MKD", "MLI", "MMR", "MNG", "MAC", "MNP", "MTQ", "MRT", "MSR", "MLT", "MUS",
+    "MDV", "MWI", "MEX", "MYS", "MOZ", "NAM", "NCL", "NER", "NFK", "NGA", "NIC",
+    "NLD", "NOR", "NPL", "NRU", "NIU", "NZL", "OMN", "PAN", "PER", "PYF", "PNG",
+    "PHL", "PAK", "POL", "SPM", "PCN", "PRI", "PSE", "PRT", "PLW", "PRY", "QAT",
+    "REU", "ROU", "SRB", "RUS", "RWA", "SAU", "SLB", "SYC", "SDN", "SWE", "SGP",
+    "SHN", "SVN", "SJM", "SVK", "SLE", "SMR", "SEN", "SOM", "SUR", "SSD", "STP",
+    "SLV", "SXM", "SYR", "SWZ", "TCA", "TCD", "ATF", "TGO", "THA", "TJK", "TKL",
+    "TLS", "TKM", "TUN", "TON", "TUR", "TTO", "TUV", "TWN", "TZA", "UKR", "UGA",
+    "UMI", "USA", "URY", "UZB", "VAT", "VCT", "VEN", "VGB", "VIR", "VNM", "VUT",
+    "WLF", "WSM", "YEM", "MYT", "ZAF", "ZMB", "ZWE"
+]
+
+# 2行目にCountryCode(3letter)を書き込む
+ws2.cell(row=1, column=2).value = '3letterCountryCode'
+for i, cc in enumerate(cclist3letter , start=2):
+    ws2.cell(row=i, column=2).value = cc
 
 
 # Excelのコピー作業
@@ -78,4 +110,10 @@ for plantfile in os.listdir(folder_path):
 
 print("done")
 
-newWb.save('SumCountryCode.xlsx')     
+newWb.save('SumCountryCode.xlsx')  
+
+# Excel ファイルを読み込む
+df = pd.read_excel('SumCountryCode.xlsx')
+
+# DataFrame を CSV ファイルに出力する
+df.to_csv('SumCountryCode.csv', index=False)  

@@ -11,7 +11,7 @@ world_geo = f'{url}/world-countries.json'
 
 df= pd.read_csv("normalizedCountryPlantDada.csv")
 
-for i in range(2,52):#50個マップ作製する
+for i in range(2,df.shape[1]):#50個マップ作製する
     
     print(df.columns[i])
     # 地図生成
@@ -21,7 +21,7 @@ for i in range(2,52):#50個マップ作製する
     geo_data=world_geo,
     name='choropleth',
     data=df,# 描画データ
-    columns=["3-letter country codes",df.columns[i]],# ["国コード", "値の列"]
+    columns=["3letterCountryCode",df.columns[i]],# ["国コード", "値の列"]
     key_on='feature.id',
     fill_color='Greens',# 色指定
     fill_opacity=0.7,# 色の透明度
@@ -38,7 +38,7 @@ for i in range(2,52):#50個マップ作製する
         browser = await launch()
         page = await browser.newPage()
         # HTML ファイルを開く
-        await page.goto(f'file:///C:/Users/wagta/Documents/SONY_CSL_RA/Python_exe_folder/git_sample/{html_path}')
+        await page.goto(f'file:///C:/Users/wagta/Documents/SONY_CSL_RA/OccurrenceData/plant-heatmap-maker/{html_path}')
         # ページのスクリーンショットのための画面サイズ指定？
         await page.setViewport({
             'width': 1050,
