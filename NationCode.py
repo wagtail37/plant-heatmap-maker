@@ -31,6 +31,15 @@ cclist = [
     'TZ', 'UA', 'UG', 'UM', 'US', 'UY', 'UZ', 'VA', 'VC', 'VE', 'VG', 'VI',
     'VN', 'VU', 'WF', 'WS', 'YE', 'YT', 'ZA', 'ZM', 'ZW' ]
 
+newWb =px.Workbook()
+ws2 = newWb.active
+
+# 1行目にCountryCodeを書き込む
+ws2.cell(row=1, column=1).value = 'CountryCode'
+for i, cc in enumerate(cclist, start=2):
+    ws2.cell(row=i, column=1).value = cc
+
+
 
 # Excelのコピー作業
 for plantfile in os.listdir(folder_path):
@@ -44,8 +53,8 @@ for plantfile in os.listdir(folder_path):
         plantName=plantnames[0]
         print(plantName)
 
-        workbook2 = px.load_workbook('SumCountryCode.xlsx')
-        ws2 = workbook2["Sheet1"]
+        
+        ws2 = newWb.active
         ws2.cell(row=1, column=k).value=plantName
 
 
@@ -67,5 +76,6 @@ for plantfile in os.listdir(folder_path):
 
         k=k+1
 
+print("done")
 
-        workbook2.save('SumCountryCode.xlsx')     
+newWb.save('SumCountryCode.xlsx')     
