@@ -12,7 +12,7 @@ world_geo = f'{url}/world-countries.json'
 
 df= pd.read_csv("normalizedCountryPlantDada.csv")
 
-for i in range(2,df.shape[1]):#50個マップ作製する
+for i in range(2,df.shape[1]):
     
     print(df.columns[i])
     # 地図生成
