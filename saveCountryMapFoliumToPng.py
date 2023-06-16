@@ -4,6 +4,7 @@ import folium
 import asyncio
 from pyppeteer import launch
 import os
+import shutil
 
 #国データ
 url = 'https://raw.githubusercontent.com/python-visualization/folium/master/examples/data'
@@ -37,8 +38,12 @@ for i in range(2,df.shape[1]):#50個マップ作製する
     async def html_to_png(html_path, output_path):
         browser = await launch()
         page = await browser.newPage()
+        # 現在の作業ディレクトリを取得
+        current_dir = os.getcwd()
+        # HTML ファイルへの相対パスを作成
+        relative_html_path = os.path.join(current_dir, html_path)
         # HTML ファイルを開く
-        await page.goto(f'file:///C:/Users/wagta/Documents/SONY_CSL_RA/OccurrenceData/plant-heatmap-maker/{html_path}')
+        await page.goto(f'file://{relative_html_path}')
         # ページのスクリーンショットのための画面サイズ指定？
         await page.setViewport({
             'width': 1050,
@@ -60,3 +65,26 @@ for i in range(2,df.shape[1]):#50個マップ作製する
 
     # HTML ファイルを削除
     os.remove(html_path)
+
+#出力したpngのヒートマップを一つのファイルにまとめる
+def move_png_files(source_dir, destination_dir):
+    # フォルダが存在しない場合は作成する
+    if not os.path.exists(destination_dir):
+        os.makedirs(destination_dir)
+
+    # ソースディレクトリ内のファイルを走査
+    for filename in os.listdir(source_dir):
+        if filename.endswith('.png'):
+            # PNGファイルの場合、新しいフォルダに移動する
+            source_path = os.path.join(source_dir, filename)
+            destination_path = os.path.join(destination_dir, filename)
+            shutil.move(source_path, destination_path)
+            print(f"Moved {filename} to {destination_dir}")
+
+# 現在のディレクトリを取得
+current_directory = os.getcwd()
+# 移動元ディレクトリと移動先ディレクトリのパスを指定
+source_directory = current_directory
+destination_directory = os.path.join(current_directory, 'heatmapFolder')
+# PNGファイルを移動する
+move_png_files(source_directory, destination_directory)
