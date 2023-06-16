@@ -6,7 +6,7 @@ import openpyxl as px
 folder_path = 'occurrenceDataSampleFolder'
 
 
-k=3
+
 
 
 
@@ -73,6 +73,8 @@ for i, cc in enumerate(cclist3letter , start=2):
     ws2.cell(row=i, column=2).value = cc
 
 
+# 3行目以降に植物データを書き込む
+k=3
 # Excelのコピー作業
 for plantfile in os.listdir(folder_path):
     if plantfile.endswith('.xlsx'):
@@ -110,10 +112,10 @@ for plantfile in os.listdir(folder_path):
 
 print("done")
 
-newWb.save('SumCountryCode.xlsx')  
+newWb.save('sumCountryCode.xlsx')  
 
 # Excel ファイルを読み込む
-df = pd.read_excel('SumCountryCode.xlsx')
+df = pd.read_excel('sumCountryCode.xlsx')
 
 # DataFrame を CSV ファイルに出力する
-df.to_csv('SumCountryCode.csv', index=False)  
+df.to_csv('sumCountryCode.csv', index=False)  

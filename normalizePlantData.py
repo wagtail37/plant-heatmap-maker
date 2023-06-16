@@ -1,7 +1,7 @@
 import pandas as pd
 
 # データフレームの作成
-df = pd.read_csv('SumCountryCode.csv')#植物名は列名になる
+df = pd.read_csv('sumCountryCode.csv')#植物名は列名になる
 
 print(df)
 
